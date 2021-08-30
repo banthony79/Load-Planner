@@ -51,6 +51,14 @@ public class Customer {
         return zone;
     }
 
+    public double returnLat() {
+        return lat;
+    }
+
+    public double returnLong() {
+        return longt;
+    }
+
     public double getLat() {
         return lat;
     }

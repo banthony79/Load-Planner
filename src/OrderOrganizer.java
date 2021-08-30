@@ -87,6 +87,12 @@ public class OrderOrganizer {
         }
     }
 
+    public List<Order> returnZoneList(String groupID) {
+        Predicate<Order> byZone = order -> order.returnCustomerZone().equals(groupID);
+        var result = orderList.stream().filter(byZone).collect(Collectors.toList());
+        return result;
+    }
+
     public void organizeList() {
         Comparator<Order> compareByZone = Comparator.
                                             comparing(Order::returnCustomerZone).

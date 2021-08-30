@@ -11,12 +11,14 @@ public class UX {
     private ArrayList<Product> productList;
     private LinkedList<Order> masterOrderList;
     private OrderOrganizer organizer;
+    private final OrderMaker orderMaker;
 
     public UX() {
         this.customerDB = new LinkedList<>();
         this.productList = new ArrayList<>();
         this.masterOrderList = new LinkedList<>();
         this.organizer = new OrderOrganizer(masterOrderList);
+        this.orderMaker = new OrderMaker(masterOrderList, organizer);
     }
 
     public void addCustomer(String memberNumber, String city, double lat, double longt, String prov, String zone) {
@@ -81,10 +83,11 @@ public class UX {
         //showProducts();
        // organizer.organizeList();
         //organizer.organizeByOrderNumber("57659");
-        organizer.organizeByGroup("004");
-        organizer.organizeByProduct("700127");
-        organizer.organizeByOrderNumber("57661");
-
+        //organizer.organizeByGroup("004");
+        //organizer.organizeByProduct("700127");
+        //organizer.organizeByOrderNumber("57661");
+        System.out.println(findCustomer("0"));
+        System.out.println("The distance is " + returnKms("03769", "08392"));
 
     }
 
@@ -97,7 +100,10 @@ public class UX {
    return null; }
 
 
-
+    public double returnKms(String A, String B) {
+        return orderMaker.calculateDistance(findCustomer(A).returnLat(), findCustomer(A).returnLong(),
+                findCustomer(B).returnLat(), findCustomer(B).returnLong());
+    }
 
 
 

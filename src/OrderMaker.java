@@ -6,12 +6,13 @@ import java.util.stream.Stream;
 
 public class OrderMaker {
 
-    private InventoryControl inventory;
-    private LinkedList<Order> orderList;
-    private OrderOrganizer organizer;
+    //private InventoryControl inventory;
+    private final LinkedList<Order> orderList;
+    private final OrderOrganizer organizer;
 
-    public OrderMaker(InventoryControl inventory, LinkedList<Order> orders, OrderOrganizer organizer) {
-    this.inventory = inventory;
+
+    public OrderMaker(LinkedList<Order> orders, OrderOrganizer organizer) {
+   // this.inventory = inventory;
     this.orderList = orders;
     this.organizer = organizer;
     }
@@ -24,7 +25,7 @@ public class OrderMaker {
         return organizer;
     }
 
-    public List<Order> addZonesToList(String zone1) {
+   /* public List<Order> addZonesToList(String zone1) {
        return organizer.returnZoneList(zone1);
     }
 
@@ -48,7 +49,35 @@ public class OrderMaker {
 
     return newList;
     }
+*/
+
+    //Distance, d = 3963.0 * arccos[(sin(lat1) * sin(lat2)) + cos(lat1) * cos(lat2) * cos(long2 – long1)]
+
+    public double calculateDistance(double lat1, double long1, double lat2, double long2) {
+
+        long1 = Math.toRadians(long1);
+        long2 = Math.toRadians(long2);
+        lat1 = Math.toRadians(lat1);
+        lat2 = Math.toRadians(lat2);
+
+
+        double dlon = long2 - long1;
+        double dlat = lat2 - lat1;
+        double a = Math.pow(Math.sin(dlat / 2), 2)
+                + Math.cos(lat1) * Math.cos(lat2)
+                * Math.pow(Math.sin(dlon / 2),2);
+
+        double c = 2 * Math.asin(Math.sqrt(a));
+
+        // Radius of earth in kilometers. Use 3956
+        // for miles
+        double r = 6371;
+
+        // calculate the result
+        return(c * r);
+    }
 
 
 }
+
 

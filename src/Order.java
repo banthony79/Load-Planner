@@ -43,6 +43,14 @@ public class Order {
         return nameArray[0];
     }
 
+    public double getLat() {
+        return customer.getLat();
+    }
+
+    public double getLongT() {
+        return customer.returnLat();
+    }
+
     public String returnSalesFullName() {
         return salesRep;
     }
@@ -58,6 +66,7 @@ public class Order {
     public String returnCustomerID() {
         return customer.getCustomerNumber();
     }
+
 
     public String returnProductID() {
         return product.getItemNumber();

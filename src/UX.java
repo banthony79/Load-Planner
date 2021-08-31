@@ -1,24 +1,21 @@
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class UX {
 
     private LinkedList<Customer> customerDB;
-    private ArrayList<Product> productList;
     private LinkedList<Order> masterOrderList;
     private OrderOrganizer organizer;
     private final OrderMaker orderMaker;
+    private final InventoryControl inventoryControl;
 
     public UX() {
         this.customerDB = new LinkedList<>();
-        this.productList = new ArrayList<>();
         this.masterOrderList = new LinkedList<>();
         this.organizer = new OrderOrganizer(masterOrderList);
-        this.orderMaker = new OrderMaker(masterOrderList, organizer);
+        this.inventoryControl = new InventoryControl(5, 0, masterOrderList);
+        this.orderMaker = new OrderMaker(masterOrderList, organizer, inventoryControl);
     }
 
     public void addCustomer(String memberNumber, String city, double lat, double longt, String prov, String zone) {
@@ -26,7 +23,7 @@ public class UX {
     }
 
     public void addProduct(String name, int grossWeight, String itemNumber, int qtyInStock) {
-        productList.add(new Product(name, grossWeight, itemNumber, qtyInStock));
+        inventoryControl.getInventoryList().add(new Product(name, grossWeight, itemNumber, qtyInStock));
     }
 
     public void importOrders(String fileName) {
@@ -52,7 +49,13 @@ public class UX {
                 String zone = orderArray[9];
                 String province = orderArray[10];
                 double lat = Double.parseDouble(orderArray[11]);
+                if (lat > 0) {
+                    lat = lat * -1;
+                }
                 double longt = Double.parseDouble(orderArray[12]);
+                if (longt > 0) {
+                    longt = longt * -1;
+                }
                 int itemWeight = proWeight/qty;
 
                 product = new Product(proName, itemWeight, itemNumber, inventoryNum);
@@ -78,7 +81,7 @@ public class UX {
     public void run(String fileName) {
         importOrders(fileName);
         addCustomers();
-        addProducts();
+        inventoryControl.addProducts();
         addProductsToAllCustomers();
         //showProducts();
        // organizer.organizeList();
@@ -88,6 +91,7 @@ public class UX {
         //organizer.organizeByOrderNumber("57661");
         System.out.println(findCustomer("0"));
         System.out.println("The distance is " + returnKms("03769", "08392"));
+        inventoryControl.showProducts();
 
     }
 
@@ -99,6 +103,10 @@ public class UX {
         }
    return null; }
 
+    public List<Product> productList() {
+        return inventoryControl.getInventoryList();
+    }
+
 
     public double returnKms(String A, String B) {
         return orderMaker.calculateDistance(findCustomer(A).returnLat(), findCustomer(A).returnLong(),
@@ -107,16 +115,7 @@ public class UX {
 
 
 
-    private void addProducts() {
-        Product product = null;
-        for (int i = 0; i < masterOrderList.size(); i++) {
-            product = masterOrderList.get(i).getProduct();
-            if (!checkProduct(product.getItemNumber())) {
-                productList.add(product);
-            }
 
-        }
-    }
 
     private void addCustomers() {
         Customer customer = null;
@@ -148,12 +147,7 @@ public class UX {
         }
     }
 
-    public void showProducts() {
-        System.out.println("=====PRODUCT LIST=====");
-        for (Product product: productList) {
-            System.out.println(product);
-        }
-    }
+
 
     public void displayAllCustomers() {
         System.out.println("====CUSTOMER LIST====");
@@ -175,21 +169,13 @@ public class UX {
 
     public void displayAllProducts() {
         System.out.println("=====PRODUCT LIST======");
-        for (Product product: productList) {
+        for (Product product: productList()) {
             System.out.println(product);
         }
 
     }
 
-    private boolean checkProduct(String itemNumber) {
-        if (!masterOrderList.isEmpty()) {
-            for (Product product: productList) {
-                if (product.getItemNumber().equals(itemNumber)) {
-                    return true;
-                }
-            }
-       return false;  }
-  return false;   }
+
 
 
 

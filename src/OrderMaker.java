@@ -9,12 +9,14 @@ public class OrderMaker {
     //private InventoryControl inventory;
     private final LinkedList<Order> orderList;
     private final OrderOrganizer organizer;
+    private final InventoryControl inventoryControl;
 
 
-    public OrderMaker(LinkedList<Order> orders, OrderOrganizer organizer) {
+    public OrderMaker(LinkedList<Order> orders, OrderOrganizer organizer, InventoryControl inv) {
    // this.inventory = inventory;
     this.orderList = orders;
     this.organizer = organizer;
+    this.inventoryControl = inv;
     }
 
     public LinkedList<Order> getOrderList() {
@@ -25,7 +27,7 @@ public class OrderMaker {
         return organizer;
     }
 
-   /* public List<Order> addZonesToList(String zone1) {
+   public List<Order> addZonesToList(String zone1) {
        return organizer.returnZoneList(zone1);
     }
 
@@ -36,20 +38,7 @@ public class OrderMaker {
         List<Order> newList = Stream.concat(list1.stream(), list2.stream()).collect(Collectors.toList());
 
     return newList;
-    }
-
-    public List<Order> addZonesToList(String zone1, String zone2, String zone3) {
-        List<Order> list1  = organizer.returnZoneList(zone1);
-        List<Order> list2 = organizer.returnZoneList(zone2);
-        List<Order> list3 = organizer.returnZoneList(zone3);
-
-        List<Order> newList = Stream.concat(list1.stream(), list2.stream()).collect(Collectors.toList());
-
-        newList.addAll(organizer.returnZoneList(zone3));
-
-    return newList;
-    }
-*/
+  }
 
     //Distance, d = 3963.0 * arccos[(sin(lat1) * sin(lat2)) + cos(lat1) * cos(lat2) * cos(long2 – long1)]
 
@@ -76,6 +65,8 @@ public class OrderMaker {
         // calculate the result
         return(c * r);
     }
+
+
 
 
 }

@@ -3,7 +3,6 @@ public class Product {
     private String name;
     private int itemWeight;
     private String itemNumber;
-    private boolean inStock;
     private int qtyInStock;
 
 
@@ -30,6 +29,19 @@ public class Product {
 
     public int getItemWeight() {
         return itemWeight;
+    }
+
+    public void addToLoad(int qty) {
+        if (qtyInStock < qty) {
+            System.out.println("Not in stock");
+        } else {
+            this.qtyInStock--;
+        }
+
+    }
+
+    public void addToStock(int qty) {
+        this.qtyInStock++;
     }
 }
 

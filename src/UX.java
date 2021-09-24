@@ -15,7 +15,7 @@ public class UX {
         this.masterOrderList = new LinkedList<>();
         this.organizer = new OrderOrganizer(masterOrderList);
         this.inventoryControl = new InventoryControl(5, 0, masterOrderList);
-        this.orderMaker = new OrderMaker(masterOrderList, organizer, inventoryControl);
+        this.orderMaker = new OrderMaker(masterOrderList, organizer, inventoryControl, customerDB);
     }
 
     public void addCustomer(String memberNumber, String city, double lat, double longt, String prov, String zone) {

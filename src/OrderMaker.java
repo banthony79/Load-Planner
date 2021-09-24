@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,13 +12,17 @@ public class OrderMaker {
     private final LinkedList<Order> orderList;
     private final OrderOrganizer organizer;
     private final InventoryControl inventoryControl;
+    private final List<City> cityList;
+    private final List<Customer> customerList;
 
 
-    public OrderMaker(LinkedList<Order> orders, OrderOrganizer organizer, InventoryControl inv) {
+    public OrderMaker(LinkedList<Order> orders, OrderOrganizer organizer, InventoryControl inv, List<Customer> custList) {
    // this.inventory = inventory;
     this.orderList = orders;
     this.organizer = organizer;
     this.inventoryControl = inv;
+    this.cityList = new LinkedList<>();
+    this.customerList = custList;
     }
 
     public LinkedList<Order> getOrderList() {
@@ -66,9 +72,71 @@ public class OrderMaker {
         return(c * r);
     }
 
+    public City returnCity(String townName) {
+        for (City city: cityList) {
+            if (townName.equals(city.getCityName())) {
+                return city;
+            }
+        }
+   return null; }
+
+    private void printOrderStatus(Product product, boolean inStock) {
+       // if (inStock(System.out.println(product.getName() + " - QTY IN STOCK: " + product. )));
+  }
+
+
+    public void checkInventory(List<Customer> foundOrders) {
+        for (int i = 0; i < foundOrders.size(); i++) {
+            Customer searchedCustomer = foundOrders.get(i);
+            System.out.println();
+            for (int j = 0; j < searchedCustomer.getOrderList().size(); j++) {
+                Product foundProduct = searchedCustomer.getOrderList().get(j).getProduct();
+                for (int k = 0; k < inventoryControl.getInventoryList().size(); k++) {
+                   // if (searchedCustomer.checkInventory())
+              }
+            }
+        }
+    }
+
+
+    public void findOrdersByCity(String townName, int howManyKMs) {
+        City city = null;
+        Customer cust = null;
+        List<Customer> foundOrders = new ArrayList<>();
+        for (int i = 0; i < cityList.size(); i++) {
+           if (findCity(townName) != null) {
+               city = findCity(townName);
+           }  else {
+               System.out.println("City not found");
+           }
+            for (int j = 0; j < customerList.size(); j++) {
+                cust = customerList.get(i);
+                if (calculateDistance(city.getLat(), city.getLongt(), cust.getLat(), cust.getLongt()) < howManyKMs) {
+                    foundOrders.add(cust);
+                }
+            }
+        }
+
+    }
+
+
+
+
+    public City findCity(String cityName) {
+        String newName = cityName.toUpperCase();
+        for (City city : cityList) {
+            if (city.getCityName().equals(newName)) {
+                return city;
+            }
+                }
+    return null; }
+
 
 
 
 }
+
+
+
 
 

@@ -33,11 +33,16 @@ public class Customer {
         }
     }
 
+    public boolean checkInventory(Product customerProduct, Product inventoryProduct) {
+        if (customerProduct.getItemNumber().equals(inventoryProduct.getItemNumber())) {
+            return true;
+        }
+   return false; }
+
 
     public ArrayList<Order> getOrderList() {
         return orderList;
     }
-
 
     public String getCustomerNumber() {
         return customerNumber;
@@ -46,7 +51,6 @@ public class Customer {
     public String getCity() {
         return city;
     }
-
     public String getZone() {
         return zone;
     }
@@ -66,6 +70,8 @@ public class Customer {
     public double getLongt() {
         return longt;
     }
+
+
 
 
 

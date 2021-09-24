@@ -21,6 +21,7 @@ public class InventoryControl {
     }
 
     public List<Product> getInventoryList() {
+
         return inventoryList;
     }
 
@@ -49,12 +50,17 @@ public class InventoryControl {
     }
 
 
+
+
+
     public void showProducts() {
         System.out.println("=====PRODUCT LIST=====");
         for (Product product : inventoryList) {
             System.out.println(product);
         }
     }
+
 }
+
 
 

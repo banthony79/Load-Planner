@@ -20,10 +20,12 @@ public class Product {
     }
 
     public String toString() {
+
         return qtyInStock + " x " + name + ", " + itemNumber + ", " + itemWeight + " lbs";
     }
 
     public String getItemNumber() {
+
         return itemNumber;
     }
 
@@ -40,9 +42,15 @@ public class Product {
 
     }
 
+    public int returnQTY() {
+        return qtyInStock;
+    }
+
     public void addToStock(int qty) {
         this.qtyInStock++;
     }
 }
+
+
 
 
